@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bo'riboyev Muxriddin - Profil</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #09090b; /* Very dark background */
+            --card-bg: rgba(24, 24, 27, 0.6); /* Slightly lighter card bg */
+            --card-border: rgba(255, 255, 255, 0.08); /* Subtle border */
+            --text-main: #f8fafc;
+            --text-muted: #a1a1aa;
+            --primary-blue: #0ea5e9; /* Play button color */
+            --hover-bg: rgba(39, 39, 42, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            /* Add a subtle ambient glow effect */
+            background-image: radial-gradient(circle at 50% 0%, rgba(120, 50, 255, 0.1), transparent 50%),
+                              radial-gradient(circle at 80% 80%, rgba(14, 165, 233, 0.05), transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        /* Umumiy karta uslubi (Base Card) */
+        .bento-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: var(--text-main);
+            position: relative;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .bento-card:hover {
+            background: var(--hover-bg);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Karta ichidagi yuqori o'ng burchakdagi strelka ↗ */
+        .card-arrow {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        .bento-card:hover .card-arrow {
+            opacity: 1;
+            transform: translate(2px, -2px);
+            color: var(--text-main);
+        }
+
+        /* --- 1. Asosiy Profil Kartasi --- */
+        .profile-card {
+            grid-column: span 2; /* 2 ustunni egallaydi */
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .avatar-wrap {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--bg-color);
+        }
+
+        .name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.5px;
+        }
+
+        .bio-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 90%;
+        }
+
+        /* Badges (Pill shaklidagi teglari) */
+        .badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: auto;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .badge i {
+            color: #a855f7;
+        }
+
+        /* Katta ko'k play tugmasi (pastki o'ng burchak) */
+        .play-btn {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            width: 65px;
+            height: 65px;
+            background-color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(14, 165, 233, 0.6);
+        }
+
+        /* --- Standart kichik kartalar --- */
+        .icon-circle {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Har bir karta uchun maxsus ranglar */
+        .c-telegram .icon-circle { color: #3b82f6; }
+        .c-email .icon-circle { color: #f59e0b; }
+        .c-linkedin .icon-circle { color: #0ea5e9; }
+        .c-instagram .icon-circle { color: #ec4899; }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Eng pastdagi mitti ijtimoiy tarmoqlar (Footer) */
+        .bottom-socials {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            transform: translateY(-2px);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 900px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .profile-card {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-card {
+                grid-column: span 1;
+            }
+            .play-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="bento-grid">
+            
+            <!-- 1. Asosiy Profil Kartasi (Katta) -->
+            <div class="bento-card profile-card">
+                <div class="avatar-wrap">
+                    <img src="profile.jpg" alt="Profile View" class="avatar">
+                </div>
+                
+                <h1 class="name">Bo'riboyev Muxriddin</h1>
+                
+                <p class="bio-text">
+                    Maqsad sari intiluvchanman — full-stack dasturlash, til o‘rganish va global savdo hamda iqtisodiy nazariyalar asosida o‘zimni rivojlantiryapman. Texnologiya, iqtisod va global fikrlashni birlashtirib, har kuni yangi imkoniyatlar yaratish yo‘lida harakatdaman.
+                </p>
+
+                <div class="badges">
+                    <div class="badge">
+                        <i class="fa-solid fa-chart-line"></i> Iqtisodchi
+                    </div>
+                    <div class="badge">
+                        <i class="fa-solid fa-location-dot"></i> O'zbekiston, Samarqand
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- 2. Telegram Kartasi -->
+            <a href="https://t.me/AloneMike" class="bento-card c-telegram" target="_blank">
+                <i class="fa-solid fa-arrow-up-right-from-square card-arrow"></i>
+                <div class="icon-circle">
+                    <i class="fa-brands fa-telegram"></i>
+                </div>
+                <h3 class="card-title">Telegram</h3>
+                <p class="card-desc">Asosiy faoliyatim va shaxsiy blogim. Eksklyuziv yangiliklar bu yerda.</p>
+            </a>
+
+            <!-- 3. Email Kartasi -->
+            <a href="https://mail.google.com/mail/u/0/?hl=en#inbox" class="bento-card c-email" target="_blank">
+                <i class="fa-solid fa-arrow-up-right-from-square card-arrow"></i>
+                <div class="icon-circle">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <h3 class="card-title">Email</h3>
+                <p class="card-desc">Biznes hamkorlik va savollar uchun elektron pochtam orqali bog'laning.</p>
+            </a>
+
+            <!-- 4. LinkedIn Kartasi -->
+            <a href="https://linkedin.com/in/mukhriddin-buriboev-0094392a4" class="bento-card c-linkedin" target="_blank">
+                <i class="fa-solid fa-arrow-up-right-from-square card-arrow"></i>
+                <div class="icon-circle">
+                    <i class="fa-brands fa-linkedin"></i>
+                </div>
+                <h3 class="card-title">LinkedIn</h3>
+                <p class="card-desc">Professional ish faoliyatim, tajribam va xalqaro aloqalar uchun.</p>
+            </a>
+
+            <!-- 5. Instagram Kartasi -->
+            <a href="https://www.instagram.com/lone_wolf_m.b.m/" class="bento-card c-instagram" target="_blank">
+                <i class="fa-solid fa-arrow-up-right-from-square card-arrow"></i>
+                <div class="icon-circle">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
+                <h3 class="card-title">Instagram</h3>
+                <p class="card-desc">Hayotimdagi qiziqarli lahzalar, sayohat va shaxsiy kreativ sahifam.</p>
+            </a>
+
+        </div>
+
+        <!-- Eng pastdagi mitti ijtimoiy tarmoqlar qatori -->
+        <div class="bottom-socials">
+            <a href="https://t.me/AloneMike" class="social-link" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+            <a href="https://www.instagram.com/lone_wolf_m.b.m/" class="social-link" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://linkedin.com/in/mukhriddin-buriboev-0094392a4" class="social-link" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+
+    </div>
+
+</body>
+</html>
